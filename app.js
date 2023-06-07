@@ -1,9 +1,8 @@
 const card = document.querySelector('.copy')
 const input = document.querySelector('.type')
 const button = document.querySelector('.press')
-
-
-
+const body = document.querySelector('.bod')
+const modal = document.querySelector('.modal-dialog')
 
 function noRefresh (event) {
     event.preventDefault();
@@ -20,7 +19,9 @@ fetch(`https://thecocktaildb.com/api/json/v1/1/filter.php?i=${input.value}`)
             <div class="card-body">
                 <h5 class="card-title">${element.strDrink}</h5>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                <a href="#" class="btn btn-primary">Go somewhere</a>
+                <button onclick=openModal(${element.idDrink}) type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                Show more
+              </button>
             </div>
       `)
     })
@@ -41,10 +42,46 @@ fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink')
                   <img src="${element.strDrinkThumb}" class="card-img-top" alt="...">
               <div class="card-body">
                   <h5 class="card-title">${element.strDrink}</h5>
+                  <i  onclick=changeFont() class="fa-regular fa-heart"></i>
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-                  <a href="#" class="btn btn-primary">Go somewhere</a>
+                  <button onclick=openModal(${element.idDrink}) type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    Show more
+                  </button>
               </div>
         `)
     });
 });
+
+const openModal = (id) => {
+    fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
+    .then((resp) => resp.json())
+    .then((data) =>{
+        console.log(data.drinks[0])
+        modal.insertAdjacentHTML("beforeend",`
+        <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">${data.drinks[0].strDrink}</h1>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+        <img src="${data.drinks[0].strDrinkThumb}" class="card-img-top" alt="...">
+        ${data.drinks[0].strInstructionsIT}
+        
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+        `)
+    })
+ modal.innerHTML = ""
+}
+
+const changeFont = () => {
+   
+}
+
+
+
 
