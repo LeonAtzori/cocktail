@@ -2,8 +2,8 @@ const card = document.querySelector('.copy')
 const input = document.querySelector('.type')
 const button = document.querySelector('.press')
 const body = document.querySelector('.bod')
-const modal = document.querySelector('.modal-dialog')
-  let baliseI = '<i onclick=changeFont() class="fa-regular fa-heart"></i>'
+const modal = document.querySelector('.modal-dialog') 
+    '<i onclick=changeFont() class="fa-regular fa-heart"></i>'
   let baliseI2 = '<i class="fa-solid fa-heart"></i>'
 function noRefresh (event) {
     event.preventDefault();
@@ -19,18 +19,24 @@ fetch(`https://thecocktaildb.com/api/json/v1/1/filter.php?i=${input.value}`)
                 <img src="${element.strDrinkThumb}" class="card-img-top" alt="...">
             <div class="card-body">
                 <h5 class="card-title">${element.strDrink}</h5>
+                <i class="fa-regular fa-heart icone"></i>
                 <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                 <button onclick=openModal(${element.idDrink}) type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 Show more
               </button>
-            </div> `)})})
+            </div> `)
+          })
+          const icones = document.querySelectorAll('.icone')
+          icones.forEach(icone => {
+            icone.addEventListener('click', function(){
+              icone.classList.toggle('fa-solid')
+              icone.classList.toggle('fa-regular')
+            })
+            
+          })
+        })
  console.log(window.location.search)}
 button.addEventListener('click',noRefresh)
-
-const changeFont = () => {
-  
-  console.log(card)
-}
 fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink')
 .then((resp) => resp.json())
 .then((data) =>{
@@ -41,12 +47,35 @@ fetch('https://www.thecocktaildb.com/api/json/v1/1/filter.php?c=Ordinary_Drink')
                   <img src="${element.strDrinkThumb}" class="card-img-top" alt="...">
               <div class="card-body">
                   <h5 class="card-title">${element.strDrink}</h5>
-                 ${baliseI}
+                  <i class="fa-regular fa-heart icone"></i>
                   <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
                   <button onclick=openModal(${element.idDrink}) type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Show more
                   </button>
-              </div>`)});});
+              </div>`)
+            });
+            const icones = document.querySelectorAll('.icone')
+            icones.forEach(icone => {
+              icone.addEventListener('click', function(){
+                icone.classList.toggle('fa-solid')
+                icone.classList.toggle('fa-regular')
+              })
+              
+            })
+          });
+
+
+              
+
+
+
+
+
+
+
+
+
+
 const openModal = (id) => {
     fetch(`https://www.thecocktaildb.com/api/json/v1/1/lookup.php?i=${id}`)
     .then((resp) => resp.json())
@@ -68,4 +97,5 @@ const openModal = (id) => {
           <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>`)})
- modal.innerHTML = ""}
+ modal.innerHTML = ""
+}
